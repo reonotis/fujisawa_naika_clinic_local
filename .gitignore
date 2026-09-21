@@ -1,5 +1,5 @@
 # Laravel application lives in its own repository
-/src/
+/fujisawa_naika_clinic_src/
 
 # Local environment
 .env

@@ -1,6 +1,6 @@
 # fujisawa_naika_clinic ローカル開発環境
 
-[fujisawa_naika_clinic](https://github.com/reonotis/fujisawa_naika_clinic) (Laravel 11 / PHP 8.3) 用の Docker 環境です。nginx + PHP-FPM 構成で、`src/` にアプリ本体を clone します（`src/` はこのリポジトリの管理対象外）。
+[fujisawa_naika_clinic](https://github.com/reonotis/fujisawa_naika_clinic) (Laravel 11 / PHP 8.3) 用の Docker 環境です。nginx + PHP-FPM 構成で、`fujisawa_naika_clinic_src/` にアプリ本体を clone します（`fujisawa_naika_clinic_src/` はこのリポジトリの管理対象外）。
 
 ## 構成
 
@@ -15,12 +15,12 @@
 
 ポートは標準(8000/8080/8025/1025/3306)から +2 ずらしています（new_balance_v2 は +1、HP は 8000 系）。変更はルートの `.env` で行えます。
 
-> Vite の dev サーバーのみ、`src/vite.config.js` が 5174 を前提としているため 5174 固定です。
+> Vite の dev サーバーのみ、`fujisawa_naika_clinic_src/vite.config.js` が 5174 を前提としているため 5174 固定です。
 
 ## セットアップ
 
 ```bash
-git clone https://github.com/reonotis/fujisawa_naika_clinic.git src
+git clone https://github.com/reonotis/fujisawa_naika_clinic.git fujisawa_naika_clinic_src
 cp .env.example .env
 docker compose up -d --build
 docker compose exec app composer install
@@ -29,7 +29,7 @@ docker compose exec app php artisan key:generate
 docker compose exec app php artisan migrate
 ```
 
-`src/.env` は以下に変更してください（コンテナ間通信は内部ポートを使います）。
+`fujisawa_naika_clinic_src/.env` は以下に変更してください（コンテナ間通信は内部ポートを使います）。
 
 ```
 APP_URL=http://localhost:8002
