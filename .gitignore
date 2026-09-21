@@ -1,0 +1,5 @@
+# Laravel application lives in its own repository
+/src/
+
+# Local environment
+.env
