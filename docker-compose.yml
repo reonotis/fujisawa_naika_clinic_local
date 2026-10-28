@@ -72,7 +72,7 @@ services:
   # Frontend asset build tool (Vite). Only used via
   # `docker compose run --rm --service-ports node <command>`
   # (e.g. npm install / npm run build / npm run dev).
-  # fujisawa_naika_clinic_src/vite.config.js expects the dev server on host port 5174.
+  # fujisawa_naika_clinic_src/vite.config.js expects the dev server on host port 5175.
   node:
     image: node:22-alpine
     container_name: fujisawa_naika_clinic_node
@@ -80,7 +80,7 @@ services:
     volumes:
       - ./fujisawa_naika_clinic_src:/app
     ports:
-      - "${VITE_PORT:-5174}:5173"
+      - "${VITE_PORT:-5175}:5173"
     profiles:
       - tools
 

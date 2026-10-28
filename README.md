@@ -8,14 +8,14 @@
 |---|---|---|
 | web | Nginx | http://localhost:8002 |
 | app | PHP-FPM 8.3 + Laravel | (内部のみ) |
-| db | MySQL 8.0 | localhost:3308 |
+| db | MySQL 8.0（アプリは SQLite を使用するため未使用） | localhost:3308 |
 | phpmyadmin | DB管理画面 | http://localhost:8082 |
 | mailpit | メール確認 | http://localhost:8027 (SMTP: 1027) |
-| node | Vite (profile: tools) | http://localhost:5174 |
+| node | Vite (profile: tools) | http://localhost:5175 |
 
-ポートは標準(8000/8080/8025/1025/3306)から +2 ずらしています（new_balance_v2 は +1、HP は 8000 系）。変更はルートの `.env` で行えます。
+ポートは標準(8000/8080/8025/1025/3306/5173)から +2 ずらしています（new_balance は +1、HP は標準）。変更はルートの `.env` で行えます。
 
-> Vite の dev サーバーのみ、`fujisawa_naika_clinic_src/vite.config.js` が 5174 を前提としているため 5174 固定です。
+> Vite の dev サーバーは `fujisawa_naika_clinic_src/vite.config.js` が 5175 を前提としているため、`VITE_PORT` を変える場合は `vite.config.js` の `origin` / `clientPort` も合わせて変更してください。
 
 ## セットアップ
 
@@ -26,19 +26,16 @@ docker compose up -d --build
 docker compose exec app composer install
 docker compose exec app cp .env.example .env
 docker compose exec app php artisan key:generate
+docker compose exec app touch database/database.sqlite
 docker compose exec app php artisan migrate
 ```
+
+アプリの DB は SQLite（`fujisawa_naika_clinic_src/database/database.sqlite`）を使います。`DB_CONNECTION=sqlite` は `.env.example` のままで問題ありません。
 
 `fujisawa_naika_clinic_src/.env` は以下に変更してください（コンテナ間通信は内部ポートを使います）。
 
 ```
 APP_URL=http://localhost:8002
-DB_CONNECTION=mysql
-DB_HOST=db
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=laravel
-DB_PASSWORD=secret
 MAIL_MAILER=smtp
 MAIL_HOST=mailpit
 MAIL_PORT=1025
